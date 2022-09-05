@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 col-md-6">
+                <div class="breadcumb-text">
+                    <h2>Поиск информации по препарату</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Thumb Area -->
+    <div class="breadcumb-thumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcumb-thumb">
+                        <img src="../static/img/bg-img/breadcumb.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
+<div class="contact-map-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mx-auto">
+                    <h3>Используйте <span>форму поиска</span><br>ниже</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- ##### Find Area Start ##### -->
+<section class="contact-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            
+            <!-- Contact Form Area -->
+            <div class="col-12 col-lg-6">
+                <div class="contact-form-area mb-100">
+                    <form method="post" id="FindForm">
+                        <!-- <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea> -->
+                        {% csrf_token %} <!-- Чтобы отправка не падала в 403 -->
+                        {{ form.as_p }}
+                        <button class="btn cryptos-btn btn-2 mt-30" type="submit">Найти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Find Area End ##### -->
+{%  endblock %}

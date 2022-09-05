@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Спасибо за комментарий{% endblock %}
+
+<!-- ##### Content or forms ##### -->
+{% block content %} 
+
+<h1>Спасибо за Ваш комментарий</h1>
+<br><br>
+<h3>Вы можете продолжить работу с сайтом</h3>
+ <!-- Footer Widget Area -->
+ <div class="col-12 col-md-6 col-lg-4">
+    <div class="footer-widget mb-100">
+        <div class="widget-title">
+            <br><br><br>
+        </div>
+        <nav>
+            <ul class="useful-links d-flex justify-content-between flex-wrap">
+                <li><a href="{% url 'medicines:index' %}">Главная</a></li>
+                <li><a href="{% url 'medicines:find_drug' %}">Найти лекарство</a></li>
+                <!-- ### TODO 
+                <li><a href="#">Стоимость</a></li>
+                -->
+                <li><a href="{% url 'medicines:contact' %}">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+<!-- ##### Content or forms End ##### -->
