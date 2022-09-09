@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 col-md-6">
+                <div class="breadcumb-text">
+                    <h2>Наши контакты</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Thumb Area -->
+    <div class="breadcumb-thumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcumb-thumb">
+                        <img src="img/bg-img/breadcumb.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
+<div class="contact-map-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mx-auto">
+                    <h3>Вы можете <span>использовать разные способы</span><br>связи с нами</h3>
+                    <p>Будем благодарны, если воспользуетесь формой отправки ниже</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Google Maps ##### -->
+    <!-- <div class="map-area">
+        <div id="googleMap"></div>
+    </div>
+</div> -->
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            <!-- Contact Information -->
+            <div class="col-12 col-lg-6">
+                <div class="contact-information mb-100">
+                    <!-- Contact Logo -->
+                    <div class="contact-logo mb-50">
+                        <a href="#"><img src="img/core-img/logo.png" alt=""></a>
+                    </div>
+                    <p>Homo homini lupus est.</p>
+                    <p>Follow us</p>
+                    <!-- Contact Social Info -->
+                    <div class="contact-social-info d-flex mt-50 mb-50">
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    </div>
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex">
+                        <div class="contact-icon mr-15">
+                            <i class="fa fa-map"></i>
+                        </div>
+                        <p>Russia</p>
+                    </div>
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex">
+                        <div class="contact-icon mr-15">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <p>Main: 777 <br> Office: 666</p>
+                    </div>
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex">
+                        <div class="contact-icon mr-15">
+                            <i class="fa fa-envelope-o"></i>
+                        </div>
+                        <p>test@test.com</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Form Area -->
+            <div class="col-12 col-lg-6">
+                <div class="contact-form-area mb-100">
+                    <form method="post" id="ContactForm">
+                        <!-- <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea> -->
+                        {% csrf_token %} <!-- Чтобы отправка не падала в 403 -->
+                        {{ form.as_p }}
+                        <button class="btn cryptos-btn btn-2 mt-30" type="submit">Написать нам</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Contact Area End ##### -->
+{%  endblock %}
+
+<!-- ##### All Javascript Script ##### -->
+{% block anotherscripts %}
+<!-- Google Maps -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
+<script src="js/google-map/map-active.js"></script> -->
+{% endblock %}
