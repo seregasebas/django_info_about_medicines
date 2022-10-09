@@ -25,3 +25,8 @@ class DrugName(models.Model):
     more = models.TextField(blank=True)
     def __str__(self):
         return self.name
+
+class Contacts(models.Model):
+    name = models.CharField(max_length=64, unique=False)
+    email = models.EmailField(max_length=64, unique=False)
+    message = models.TextField(blank=True)

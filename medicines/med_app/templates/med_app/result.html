@@ -6,6 +6,10 @@
 {% block content %} 
 
 <h1>Результат</h1>
-<p>Здесь будет результат поиска информации о лекарстве</p>
-{% endblock %}
+{% for key,value in view_info.items %}
+<h5>{{key}} : {{value}}</h5>
+<hr>
+{% endfor %}
+
 <!-- ##### Results End ##### -->
+{% endblock %}
