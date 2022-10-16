@@ -16,7 +16,7 @@ class ContactForm(forms.ModelForm):
         # #если нужно ввести не все строки
         # fields = ('name', 'comments')
         # #Либо так можно ввыести не все строки через исключение
-        # exclude = ('email',)
+        # exclude = ('user',)
 
 class FindForm(forms.Form):
     name = forms.CharField(label = 'Поиск', help_text='введите название препарата на русском языке')

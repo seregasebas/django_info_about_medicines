@@ -1,5 +1,7 @@
 from audioop import reverse
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 import json
 
 from django.urls import reverse_lazy
@@ -9,34 +11,43 @@ from django.core.mail import send_mail
 from .management.commands import functions, vidal_parser
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import ContextMixin
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def main_view(request):
     return render(request, 'med_app/index.html', context = {})
 
-def contacts(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            #Получаем данные из формы
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
-            send_mail(
-            f'Комментарий от {name}',
-            f'Ваше сообщение {message} принято',
-            'from@example.com',
-            [email],
-            fail_silently=True,
-            )
-            functions.contact_to_the_database(name, email, message)
-            return render(request, 'med_app/thanks.html', context = {'form':form})
-            # return HttpResponseRedirect(reverse('medicines:thanks'))
-        else:
-            return render(request, 'med_app/contact.html', context = {'form':form})
-    else:
-        form = ContactForm()
-        return render(request, 'med_app/contact.html', context = {'form':form})
+# Только залогиненные пользоватеи могут оставить комментарий
+@login_required
+# def contacts(request):
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST, files=request.FILES)
+#         if form.is_valid():
+#             #Получаем данные из формы
+#             name = form.cleaned_data['name']
+#             email = form.cleaned_data['email']
+#             message = form.cleaned_data['message']
+#             send_mail(
+#             f'Комментарий от {name}',
+#             f'Ваше сообщение {message} принято',
+#             'from@example.com',
+#             [email],
+#             fail_silently=True,
+#             )
+#             functions.contact_to_the_database(name, email, message)
+            
+#             #TODO:Добавить в форму текущего пользователя
+#             form.instance = request.user
+#             form.save
+#             return HttpResponseRedirect(reverse('med_app:thanks'))
+#         else:
+#             return render(request, 'med_app/contact.html', context = {'form':form})
+#     else:
+#         form = ContactForm()
+#         return render(request, 'med_app/contact.html', context = {'form':form})
 
 def find_drug(request):
     if request.method == 'POST':
@@ -90,9 +101,10 @@ class CommentsDetail(DetailView, NameContextMixin):
     def get_object(self, queryset=None):
         return get_object_or_404(Contacts, pk = self.comment_id)
 
-class CommentsCreate(CreateView, NameContextMixin):
+# LoginRequiredMixin - должен идти первым. Право писать комменты только у залогиненных
+class CommentsCreate(LoginRequiredMixin, CreateView, NameContextMixin):
     model = Contacts
-    fields = '__all__'
+    fields = ('name', 'email', 'message') #'__all__'  
     success_url = reverse_lazy('med_app:comments_view')
     template_name = 'med_app/comments_create.html'
 
@@ -102,11 +114,13 @@ class CommentsCreate(CreateView, NameContextMixin):
 
     #метод срабатывает после того как форма валидна
     def form_valid(self, form):
+
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
-class CommentsUpdate(UpdateView):
+class CommentsUpdate(LoginRequiredMixin, UpdateView):
     model = Contacts
-    fields = '__all__'
+    fields = ('name', 'email', 'message')
     success_url = reverse_lazy('med_app:comments_view')
     template_name = 'med_app/comments_create.html'
 
