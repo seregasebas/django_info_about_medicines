@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'med_app',
+    'user_app',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Переназначение модели пользователя
+AUTH_USER_MODEL = 'user_app.MedUser'
+
+# Переходы
+# Куда идти после логина
+LOGIN_REDIRECT_URL = '/'
+# Куда идти после выхода
+LOGOUT_REDIRECT_URL = '/'
+# Куда идти на логин
+LOGIN_URL = '/user/login/'

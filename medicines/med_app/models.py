@@ -1,5 +1,5 @@
 from django.db import models
-
+from user_app.models import MedUser
 # Create your models here.
 
 
@@ -30,3 +30,4 @@ class Contacts(models.Model):
     name = models.CharField(max_length=64, unique=False)
     email = models.EmailField(max_length=64, unique=False)
     message = models.TextField(blank=True)
+    user = models.ForeignKey(MedUser, on_delete = models.CASCADE)

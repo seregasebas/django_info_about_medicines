@@ -5,7 +5,7 @@ app_name = 'med_app'
 
 urlpatterns = [
     path('', views.main_view, name='index'),
-    path('contact/', views.contacts, name='contact'),
+    # path('contact/', views.contacts, name='contact'),
     path('find_drug/', views.find_drug, name='find_drug'),
     path('thanks/', views.thanks, name='thanks'),
     path('comments_view/', views.CommentsViews.as_view(), name='comments_view'),
