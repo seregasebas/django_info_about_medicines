@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+{{object.name}}
+{% endblock%}
+
+{% block content %}
+<h1>{{ name }}</h1>
+    <h6>Имя</h6>
+    <p>{{object.name}}</p>
+    <h6>Почта</h6>        
+    <p>{{object.email}}</p> 
+    <h6>Текст</h6>     
+    <p>{{object.message}}</p>
+        
+    <br><a href="{% url 'med_app:comments_update' pk=object.pk %}">
+            Изменить
+        </a>
+    <br><a href="{% url 'med_app:comments_delete' pk=object.pk %}">
+            Удалить
+        </a>
+{% endblock %}

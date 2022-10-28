@@ -50,7 +50,14 @@
                         <input type="email" class="form-control" id="email" placeholder="E-mail">
                         <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea> -->
                         {% csrf_token %} <!-- Чтобы отправка не падала в 403 -->
-                        {{ form.as_p }}
+                        {% for field in form %}
+                            {{field.label_tag}}
+                        {% for error in field.errors %}
+                            {{ error }}
+                        {% endfor %}
+                        <p>{{field}}</p>
+                        <hr>
+                        {% endfor %}
                         <button class="btn cryptos-btn btn-2 mt-30" type="submit">Найти</button>
                     </form>
                 </div>

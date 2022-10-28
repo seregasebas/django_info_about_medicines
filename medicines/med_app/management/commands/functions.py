@@ -3,7 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import time
-from med_app.models import DrugName, DrugGroup, DrugManufacturer
+from med_app.models import DrugName, DrugGroup, DrugManufacturer, Contacts
 
 url = 'https://www.vidal.ru/'
 
@@ -131,7 +131,7 @@ def save_file(res_parsing_dict):
         json.dump(res_parsing_dict, write_file, ensure_ascii=False)
 
 
-#функция внесения нужной информации в базу данных
+#функция внесения нужной информации по препарату в базу данных
 def data_to_the_database():
     #открываем json файл с данными парсинга
     with open('medicine.json', 'r', encoding='utf-8') as f: #открыли файл с данными
@@ -151,7 +151,7 @@ def data_to_the_database():
     man = DrugManufacturer.objects.get_or_create(name=manufacturer)[0]
     DrugName.objects.create(name=name_drug, pharmgroup = phg, manufacturer=man, form=form, indications=indications, more = more)
 
-#функция получения нужной информации из существующей базы данных
+#функция получения нужной информации по препарату из существующей базы данных
 def look_at_my_data(user_input):
     #Вытыскмваем id добавленных или уже существующих значений города и вакансии, полученных с очередного парсинга
     data = DrugName.objects.filter(name=user_input).all()
@@ -166,3 +166,12 @@ def look_at_my_data(user_input):
         res['узнать больше'] = (i.more)
 
     return res
+
+#функция внесения информации из поля комментарии в базу данных
+def contact_to_the_database(name, email, message):
+    #присваиваем значения к нужным переменным
+    name = name
+    email = email
+    message = message
+    #Вносим данные в БД
+    Contacts.objects.create(name=name, email = email, message = message)

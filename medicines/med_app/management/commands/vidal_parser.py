@@ -9,7 +9,7 @@ import json
 
 class Command(BaseCommand):
 
-    def handle(self, *args, **options):
+    def handle(self, name, *args, **options):
         print('Vidal_parser')
         #Проверяем, что файл с именамни и ссылками есть в директории
         #если нет, то делаем полный парсинг... да, долго, но что поделаешь один раз нужно будет подождать
@@ -20,8 +20,9 @@ class Command(BaseCommand):
         else:
             parser_first()
 
-        # User вводит название препарата
-        user_input = input('введите название препарата на русском языке: ').lower()
+        # # User вводит название препарата
+        # user_input = input('введите название препарата на русском языке: ').lower()
+        user_input = name.lower()
         #сохраняем первую букву
         letter = user_input[0].lower()
 

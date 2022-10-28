@@ -1,7 +1,14 @@
 from audioop import reverse
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+import json
+
+from django.urls import reverse_lazy
+from .models import DrugName, Contacts
 from .forms import ContactForm, FindForm
 from django.core.mail import send_mail
+from .management.commands import functions, vidal_parser
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.base import ContextMixin
 # Create your views here.
 
 def main_view(request):
@@ -22,6 +29,7 @@ def contacts(request):
             [email],
             fail_silently=True,
             )
+            functions.contact_to_the_database(name, email, message)
             return render(request, 'med_app/thanks.html', context = {'form':form})
             # return HttpResponseRedirect(reverse('medicines:thanks'))
         else:
@@ -34,8 +42,14 @@ def find_drug(request):
     if request.method == 'POST':
         form = FindForm(request.POST)
         if form.is_valid():
+            #Получаем данные из формы
             name = form.cleaned_data['name']
-            return render(request, 'med_app/result.html', context = {'form':form})
+            # Объект класса Command из парсинга видаля
+            res = vidal_parser.Command()
+            # Метод объекта класса для парсинга
+            res.handle(name)
+            view_info = functions.look_at_my_data(name)
+            return render(request, 'med_app/result.html', context = {'view_info':view_info})
         else:
             return render(request, 'med_app/find_drug.html', context = {'form':form})
     else:
@@ -45,8 +59,58 @@ def find_drug(request):
 def thanks(request):
     return render(request, 'med_app/thanks.html', context = {})
 
-def result(request):
-    #TODO: Внести код vidal_parser.py
-    # принимает ввод со страницы find_drug и возвращает результат
-    # результат возращать в виде текста на странице
-    return render(request, 'med_app/result.html', context = {})
+# Mixin для множественного наследования
+class NameContextMixin(ContextMixin):
+    #передаем название контекста
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['name'] = 'Комментарии'
+        return context
+
+#CRUD (create, read, update, delete)
+
+class CommentsViews(ListView, NameContextMixin):
+    model = Contacts
+    template_name = 'med_app/comments_view.html'
+
+    #получение данных
+    def get_queryset(self):
+        return Contacts.objects.all()
+
+class CommentsDetail(DetailView, NameContextMixin):
+    model = Contacts
+    template_name = 'med_app/comments_detail.html'
+
+    #Метод получения get запроса
+    def get(self, request, *args, **kwargs):
+
+        self.comment_id = kwargs['pk']
+        return super().get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Contacts, pk = self.comment_id)
+
+class CommentsCreate(CreateView, NameContextMixin):
+    model = Contacts
+    fields = '__all__'
+    success_url = reverse_lazy('med_app:comments_view')
+    template_name = 'med_app/comments_create.html'
+
+    #когда пришел post запрос
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+    #метод срабатывает после того как форма валидна
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+class CommentsUpdate(UpdateView):
+    model = Contacts
+    fields = '__all__'
+    success_url = reverse_lazy('med_app:comments_view')
+    template_name = 'med_app/comments_create.html'
+
+class CommentsDelete(DeleteView):
+    model = Contacts
+    template_name = 'med_app/comments_delete.html'
+    success_url = reverse_lazy('med_app:comments_view')
