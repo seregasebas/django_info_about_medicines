@@ -31,3 +31,15 @@ class Contacts(models.Model):
     email = models.EmailField(max_length=64, unique=False)
     message = models.TextField(blank=True)
     user = models.ForeignKey(MedUser, on_delete = models.CASCADE)
+
+    def is_name(self):
+        return self.name is None
+    
+    def is_email(self):
+        return self.email is None
+
+    def is_message(self):
+        return self.message is None
+
+    def hello_contacts(self):
+        return 'Hello, programmer!'
