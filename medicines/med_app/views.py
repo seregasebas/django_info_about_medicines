@@ -21,7 +21,7 @@ def main_view(request):
     return render(request, 'med_app/index.html', context = {})
 
 # Только залогиненные пользоватеи могут оставить комментарий
-@login_required
+# @login_required
 # def contacts(request):
 #     if request.method == 'POST':
 #         form = ContactForm(request.POST, files=request.FILES)
@@ -102,7 +102,7 @@ class CommentsDetail(DetailView, NameContextMixin):
         return get_object_or_404(Contacts, pk = self.comment_id)
 
 # LoginRequiredMixin - должен идти первым. Право писать комменты только у залогиненных
-class CommentsCreate(LoginRequiredMixin, CreateView, NameContextMixin):
+class CommentsCreate(LoginRequiredMixin, CreateView, NameContextMixin): #LoginRequiredMixin, - если только залогининым юзерам 
     model = Contacts
     fields = ('name', 'email', 'message') #'__all__'  
     success_url = reverse_lazy('med_app:comments_view')
