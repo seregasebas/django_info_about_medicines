@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'med_app',
     'user_app',
+    'capapp',
 ]
 
 MIDDLEWARE = [
