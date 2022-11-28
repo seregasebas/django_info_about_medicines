@@ -13,8 +13,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.generic.base import ContextMixin
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.contrib.auth.decorators import login_required
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def main_view(request):
@@ -65,7 +66,9 @@ def find_drug(request):
             return render(request, 'med_app/find_drug.html', context = {'form':form})
     else:
         form = FindForm()
-        return render(request, 'med_app/find_drug.html', context={'form':form})
+
+        title = 'поиск информации по препарату'
+        return render(request, 'med_app/find_drug.html', context={'form':form, 'title':title})
 
 def thanks(request):
     return render(request, 'med_app/thanks.html', context = {})
@@ -83,10 +86,21 @@ class NameContextMixin(ContextMixin):
 class CommentsViews(ListView, NameContextMixin):
     model = Contacts
     template_name = 'med_app/comments_view.html'
+    #постраничный вывод
+    paginate_by = 3
 
     #получение данных
+    # выводим только активные комментарии
     def get_queryset(self):
-        return Contacts.objects.all()
+        """
+        Получение данных
+        :return:
+        """
+        return Contacts.active_objects.all()
+
+    # #получение данных
+    # def get_queryset(self):
+    #     return Contacts.objects.all()
 
 class CommentsDetail(DetailView, NameContextMixin):
     model = Contacts

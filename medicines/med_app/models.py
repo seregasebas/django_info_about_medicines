@@ -2,7 +2,19 @@ from django.db import models
 from user_app.models import MedUser
 # Create your models here.
 
+class ActiveManager(models.Manager):
 
+    def get_queryset(self):
+        all_objects = super().get_queryset()
+        return all_objects.filter(is_active = True)
+
+class IsActiveMixin(models.Model):
+    objects = models.Manager()
+    active_objects = ActiveManager()
+    is_active = models.BooleanField(default = False, blank=True)
+
+    class Meta:
+        abstract = True
 
 class DrugGroup(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -26,7 +38,7 @@ class DrugName(models.Model):
     def __str__(self):
         return self.name
 
-class Contacts(models.Model):
+class Contacts(IsActiveMixin, models.Model):
     name = models.CharField(max_length=64, unique=False)
     email = models.EmailField(max_length=64, unique=False)
     message = models.TextField(blank=True)
