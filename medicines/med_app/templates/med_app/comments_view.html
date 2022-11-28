@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content%}
+<!-- Создадим переменную -->
+{% with all_comments=object_list %}
 
 <h1>{{ name }}</h1>
-Количество комментариев на странице: {{ object_list|length }}
-{% for item in object_list %}
+Количество комментариев на странице: {{ all_comments|length }}
+{% for item in all_comments %}
 <li>
 <a href = "{% url 'med_app:comments_detail' pk=item.pk %}">{{item.name}} : {{item.email}} : {{item.message}}</a>
-<a href = "{% url 'med_app:comments_update' pk=item.pk %}"> / Изменить</a>
-<a href= "{% url 'med_app:comments_delete' pk=item.pk %}"> / Удалить</a>
+<a href = "{% url 'med_app:comments_update' pk=item.pk %}"> / Изменить </a>
+<a href= "{% url 'med_app:comments_delete' pk=item.pk %}"> / Удалить </a>
 </li>
 {% endfor %}
-
+{% endwith %}
 <a href="{% url 'med_app:comments_create' %}">Создать</a>
 
 <!-- Pager -->

@@ -6,6 +6,7 @@
 {% endblock%}
 
 {% block content %}
+
 <h1>{{ name }}</h1>
     <h6>Имя</h6>
     <p>{{object.name}}</p>
@@ -20,4 +21,5 @@
     <br><a href="{% url 'med_app:comments_delete' pk=object.pk %}">
             Удалить
         </a>
+
 {% endblock %}
