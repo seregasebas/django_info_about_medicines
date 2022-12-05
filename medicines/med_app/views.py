@@ -87,7 +87,7 @@ class CommentsViews(ListView, NameContextMixin):
     model = Contacts
     template_name = 'med_app/comments_view.html'
     #постраничный вывод
-    paginate_by = 3
+    paginate_by = 30
 
     #получение данных
     # выводим только активные комментарии
