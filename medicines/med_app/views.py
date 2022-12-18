@@ -61,7 +61,7 @@ def find_drug(request):
             # Метод объекта класса для парсинга
             res.handle(name)
             view_info = functions.look_at_my_data(name)
-            return render(request, 'med_app/result.html', context = {'view_info':view_info})
+            return render(request, 'med_app/result.html', context = {'view_info':view_info, 'name':name})
         else:
             return render(request, 'med_app/find_drug.html', context = {'form':form})
     else:

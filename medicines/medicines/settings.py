@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-08ak@8#ukoft=dd+0)8u@x!yaps_+g6j@zp*e3)24aiwanza5n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -74,16 +74,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'medicines.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#     'default': {
+#         'NAME': 'sitedb',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'USER': 'django',
+#         'PASSWORD': 'nu123456',
+#         'HOST': 'localhost'
+#     }
+# }
 
 
 # Password validation
