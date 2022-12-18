@@ -34,6 +34,7 @@ class Command(BaseCommand):
                 res_parsing_dict = look_at_my_data(user_input)
                 save_file(res_parsing_dict)
                 print(f'Информация по преапарату {user_input} есть в базе')
+            # если нет, то парсим название и добавляем в базу
             else:
                 res_parsing_dict = res_parsing(user_input, name_url_drug)
                 save_file(res_parsing_dict)
@@ -44,11 +45,15 @@ class Command(BaseCommand):
         else:
             #получаем url_name препарата
             url_name = word_parser(letter)
-            #получаем name_url словарь
-            name_url_drug = name_url_dict(url_name)
-            #результат парсинга и на выходе информация об искомом перпарате
-            res_parsing_dict = res_parsing(user_input, name_url_drug)
-            #запись данных в файл
-            save_file(res_parsing_dict)
-            #добавляем в базу данных
-            data_to_the_database()
+            # проверяем список на пустоту
+            if len(url_name) == 6:
+                #получаем name_url словарь
+                name_url_drug = name_url_dict(url_name)
+                #результат парсинга и на выходе информация об искомом перпарате
+                res_parsing_dict = res_parsing(user_input, name_url_drug)
+                #запись данных в файл
+                save_file(res_parsing_dict)
+                #добавляем в базу данных
+                data_to_the_database()
+            else:
+                pass

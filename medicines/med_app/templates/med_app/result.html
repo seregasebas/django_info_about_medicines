@@ -6,10 +6,14 @@
 {% block content %} 
 
 <h1>Результат</h1>
+{% if view_info|length > 0 %}
 {% for key,value in view_info.items %}
 <h5>{{key}} : {{value}}</h5>
 <hr>
 {% endfor %}
-
+{% else %}
+<h3>Препарата {{ name }} не нашел((</h3>
+<hr>
+{% endif %}
 <!-- ##### Results End ##### -->
 {% endblock %}
