@@ -11,7 +11,7 @@ class ActiveManager(models.Manager):
 class IsActiveMixin(models.Model):
     objects = models.Manager()
     active_objects = ActiveManager()
-    is_active = models.BooleanField(default = False, blank=True)
+    is_active = models.BooleanField(default = True, blank=True)
 
     class Meta:
         abstract = True

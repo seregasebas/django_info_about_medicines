@@ -55,7 +55,7 @@ def find_drug(request):
         form = FindForm(request.POST)
         if form.is_valid():
             #Получаем данные из формы
-            name = form.cleaned_data['name']
+            name = form.cleaned_data['name'].lower()
             # Объект класса Command из парсинга видаля
             res = vidal_parser.Command()
             # Метод объекта класса для парсинга
