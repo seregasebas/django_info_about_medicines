@@ -18,12 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
-from med_app.api_views import ContactsViewSet, DrugNameViewSet
+from med_app.api_views import ContactsViewSet, DrugNameViewSet, DrugGroupViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'contacts', ContactsViewSet)
 router.register(r'drugnames', DrugNameViewSet)
+router.register(r'druggroups', DrugGroupViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
