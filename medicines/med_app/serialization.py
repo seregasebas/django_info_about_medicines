@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .models import Contacts, DrugName
+from .models import Contacts, DrugName, DrugGroup
 from rest_framework import routers, serializers, viewsets
 
 # Serializers define the API representation.
@@ -20,4 +20,10 @@ class DrugSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DrugName
         fields = '__all__' #['name', 'form', 'indications', 'more']
+
+class DrugGroupSerializer(serializers.HyperlinkedModelSerializer):
+    
+    class Meta:
+        model = DrugGroup
+        fields = '__all__' 
 
